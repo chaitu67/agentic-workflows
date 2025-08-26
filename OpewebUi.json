@@ -1,0 +1,288 @@
+{
+  "name": "OpewebUi",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "a97e425a-ea09-4560-a17e-020214f5b31c",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {
+          "ignoreBots": false
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -272,
+        -16
+      ],
+      "id": "a185c97f-f6be-4b08-9f54-12bc3a563a77",
+      "name": "Webhook",
+      "webhookId": "a97e425a-ea09-4560-a17e-020214f5b31c",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "apWKxkEKEmEL1c1A",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        800,
+        -16
+      ],
+      "id": "46c048e6-e31e-4bca-9672-f5f74941ee63",
+      "name": "Respond to Webhook",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5c4ed1eb-ac72-4f7c-b77b-ab1a3ad67e20",
+              "name": "output",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        592,
+        -16
+      ],
+      "id": "0ec710c8-25dd-4fb1-8383-b168cddfeeba",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.chatInput}}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -64,
+        -16
+      ],
+      "id": "faaf4888-0272-4ec9-9fe8-4e421e9e121f",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-3.5-turbo"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -64,
+        192
+      ],
+      "id": "8404318d-b2c2-4dad-8bc0-65f625354e83",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "Y7whWJixjMO4PZpj",
+          "name": "OpenAi account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "bucket",
+        "operation": "search",
+        "bucketName": "spark-glue-01",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.awsS3Tool",
+      "typeVersion": 2,
+      "position": [
+        176,
+        336
+      ],
+      "id": "134fe9b9-cda2-4c4c-ba1e-b380db059dad",
+      "name": "Search a bucket in AWS S3",
+      "credentials": {
+        "aws": {
+          "id": "jtzA2VDhUpf71RNA",
+          "name": "AWS account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1xOqexZSBhEIPyjex8QZDIRd2xEkpeI8qD9I0vDjbemM",
+          "mode": "list",
+          "cachedResultName": "Project Plan",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1xOqexZSBhEIPyjex8QZDIRd2xEkpeI8qD9I0vDjbemM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 897096553,
+          "mode": "list",
+          "cachedResultName": "Items",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1xOqexZSBhEIPyjex8QZDIRd2xEkpeI8qD9I0vDjbemM/edit#gid=897096553"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        384,
+        336
+      ],
+      "id": "d2f23f67-9a85-4727-861b-7e0e700dee70",
+      "name": "project plan",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "o8FNdaoNe3AtdKVQ",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1VtYCqBkutuS5E8qFDE4GwTMLsV2XnKgy2L1v2CqExJ8",
+          "mode": "list",
+          "cachedResultName": "Email list ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VtYCqBkutuS5E8qFDE4GwTMLsV2XnKgy2L1v2CqExJ8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VtYCqBkutuS5E8qFDE4GwTMLsV2XnKgy2L1v2CqExJ8/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        608,
+        336
+      ],
+      "id": "bf0bccb3-6218-4882-b703-304b690973e8",
+      "name": "Email list",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "o8FNdaoNe3AtdKVQ",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search a bucket in AWS S3": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "project plan": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email list": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "df4bae0c-9c4c-45aa-b48e-464cc512f9dc",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b79736b8d5b95cf9865a9a6a616916caec95ba0b6a23d48ace109fee362df294"
+  },
+  "id": "2jFW3O7QtNsRJva1",
+  "tags": []
+}
